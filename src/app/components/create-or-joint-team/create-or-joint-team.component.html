@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Sports</title>  
+    <!-- Google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;900&family=Ubuntu&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+</head>
+<body class="body" background="../../../assets/background-3.jpg">
+  <nav class="navbar sticky-top navbar-expand-lg navbar-custom">
+    <a class="navbar-brand" href="#">Spandan</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="name">
+      <h5>{{user_details.username}}</h5>
+    </div>
+    
+    <div class="logout">
+      <button class="btn btn-primary" (click)="logout()">Logout</button>    
+    </div>
+    <!-- <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+        </li>
+      </ul>
+    </div> -->
+
+  </nav>
+  <h2 class="page-title">{{sport_details.name}}</h2>
+    <div class="create-join-team">
+        <input type="text" class="form-control search" [ngModel] ='teamName' (ngModelChange)='onTeamChange($event)' placeholder="Search for a Team or Create a Team">
+        <button class="btn btn-primary" (click)="searchTeam(teamName)">Search Team</button>
+        <button class="btn btn-primary" (click)="createTeam(teamName)">Create Team</button>
+    </div>
+
+    <div class="join-team" *ngIf="displayTeamPlayers">
+        <div class="members-list" *ngFor="let player of players;">
+            <p class="btn btn-primary player col-sm-3">{{player}}</p>
+        </div>
+        <button class="btn btn-primary" (click)="joinTeam()">Join Team</button>
+    </div>
+
+    <div class="teams-list" *ngIf="isAdminSpoc()">
+
+      <button class="btn btn-primary" (click)="getTeamslist()" *ngIf="getTeams">Get Teams</button>
+
+      <div class="get-teams" *ngIf="!getTeams">
+        <div *ngFor="let team of teamsList;" class="col-sm-3 team-div">
+          <button class="btn btn-primary player" (click)="getTeamPlayers(team.name)">{{team.name}}</button>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="join-team" *ngIf="isAdminSpoc()">
+      <div class="members-list" *ngFor="let player of playersList;">
+          <p class="btn btn-primary player col-sm-3">{{player.username}} - {{player.phone_no}}</p>
+      </div>
+    </div>
+    
+    <div class="about-rules">
+        <h4>Rules and About the Game</h4>
+        <ul class="rules" *ngFor="let rule of rulesList;">
+            <li>{{rule}}</li>
+        </ul>
+
+        <div class="add-rule" *ngIf="isAdminSpoc()">
+           <input type="text" [ngModel] ='rule' (ngModelChange)='onRuleChange($event)' class="form-control search" placeholder="Enter a Rule">
+            <button class="btn btn-primary" (click)="addRule(rule)">Add Rule</button>
+        </div> 
+    </div>
+
+</body>
+</html>
